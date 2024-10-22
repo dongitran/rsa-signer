@@ -1,40 +1,72 @@
-# Generate visa card number
+# rsa-signer 🔐
 
-A simple Node.js package to generate random credit card information such as card numbers, expiration dates, and CVV codes for testing purposes.
+A lightweight utility for generating RSA signatures for API requests. Simple, fast, and easy to use! ⚡️
 
-## Installation
-
-To use this package in your Node.js project, install it via npm:
+## 📦 Installation
 
 ```bash
-npm install generate-visa-card-number-test
+npm install rsa-signer
 ```
 
-## Usage
+## ⭐️ Features
+
+- 🛡️ RSA signature generation with SHA256
+- 🔄 Automatic query parameter sorting
+- 🎯 Simple, intuitive API
+- 🚀 Easy integration with API clients
+
+## 🔨 Usage
+
+### Basic Example
 ```javascript
-const generateCreditCard = require('generate-visa-card-number-test');
+const { sign } = require('rsa-signer');
 
-// Generate a random credit card information
-const creditCard = generateCreditCard();
-console.log(creditCard);
-// { number: '4152115120832302', cvv: '011', exp: '6-2026' }
+// Your request body
+const body = {
+  amount: 100000,
+  orderId: "ORDER123"
+};
+
+const privateKey = "YOUR_PRIVATE_KEY";
+
+// Generate signature
+const { signature, qstring } = sign(body, privateKey);
 ```
-The generateCreditCard() function returns an object containing a randomly generated credit card number, expiration date, and CVV code.
 
-Optionally, you can provide a Bank Identification Number (BIN) as an argument to generateCreditCard() to create a card number starting with a specific BIN:
+### 🔌 Using with Bruno
 ```javascript
-const generateCreditCard = require('generate-visa-card-number-test');
+const { sign } = require('rsa-signer');
 
-// Generate a credit card with a specific BIN (Bank Identification Number)
-const bin = '400314'; // Replace with your desired BIN
-const creditCard = generateCreditCard(bin);
-console.log(creditCard);
-// { number: '4003140365828386', cvv: '011', exp: '6-2026' }
+const privateKey = bru.getEnvVar('PRIVATE_KEY');
+const requestId = new Date().getTime();
+
+req.body.tracking = {
+  requestId: String(requestId)
+};
+
+const { signature } = sign(req.body, privateKey);
+req.body.signature = signature;
 ```
 
+## 🛠️ API
 
-## Contributing
-Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+### sign(body, privateKey)
+- Main function for generating signatures
+- Returns: `{ signature, qstring }`
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Other Utilities
+```javascript
+const { 
+  createSignature,    // Create signature from string
+  generateSortedData, // Generate sorted query string
+  formatPrivateKey    // Format private key
+} = require('rsa-signer');
+```
+
+## 📮 Support
+
+Issues and PRs welcome! Visit our [GitHub repo](https://github.com/dongitran/rsa-signer)
+
+## 📝 License
+
+MIT © [thiendong.iuh@gmail.com](mailto:thiendong.iuh@gmail.com)
