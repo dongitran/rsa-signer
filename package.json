@@ -1,6 +1,6 @@
 {
   "name": "rsa-signer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A utility for generating RSA signatures for API requests with sorted query parameters",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "url": "https://github.com/dongitran/rsa-signer/issues"
   },
   "homepage": "https://github.com/dongitran/rsa-signer#readme",
+  "npm": "https://www.npmjs.com/package/rsa-signer",
   "engines": {
     "node": ">=10"
   },
