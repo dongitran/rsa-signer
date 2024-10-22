@@ -34,17 +34,26 @@ jobs:
   publish-gpr:
     needs: publish-npm
     runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
+          node-version: '20.x'
+          registry-url: 'https://npm.pkg.github.com'
           scope: '@dongitran'
+      - run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}" > ~/.npmrc
+          echo "@dongitran:registry=https://npm.pkg.github.com" >> ~/.npmrc
       - run: npm ci
-      - run: npm publish
+      - run: |
+          # Temporarily update package name for GitHub Packages
+          sed -i 's/"name": "rsa-signer"/"name": "@dongitran\/rsa-signer"/' package.json
+          npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   send-notification-successful:
     needs: publish-npm
