@@ -1,6 +1,6 @@
 {
   "name": "rsa-signer",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "A utility for generating RSA signatures for API requests with sorted query parameters",
   "main": "index.js",
   "scripts": {

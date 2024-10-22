@@ -38,11 +38,6 @@ const { signature, qstring } = sign(body, privateKey);
 const { sign } = require('rsa-signer');
 
 const privateKey = bru.getEnvVar('PRIVATE_KEY');
-const requestId = new Date().getTime();
-
-req.body.tracking = {
-  requestId: String(requestId)
-};
 
 const { signature } = sign(req.body, privateKey);
 req.body.signature = signature;
