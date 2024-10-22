@@ -49,8 +49,6 @@ jobs:
           echo "@dongitran:registry=https://npm.pkg.github.com" >> ~/.npmrc
       - run: npm ci
       - run: |
-          # Temporarily update package name for GitHub Packages
-          sed -i 's/"name": "rsa-signer"/"name": "@dongitran\/rsa-signer"/' package.json
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
